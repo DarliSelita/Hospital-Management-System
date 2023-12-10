@@ -52,7 +52,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Appointment Forms\Appointmentgg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -64,6 +63,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Forms\.gitkeep" />
+    <None Include="Forms\Appointment Forms\.gitkeep" />
+    <None Include="Forms\Billing Forms\.gitkeep" />
+    <None Include="Forms\Diagnostic Forms\.gitkeep" />
+    <None Include="Forms\Doctor Forms\.gitkeep" />
+    <None Include="Forms\Employee Forms\.gitkeep" />
+    <None Include="Forms\Integration Forms\.gitkeep" />
+    <None Include="Forms\Patient Forms\.gitkeep" />
+    <None Include="Forms\Reporting Forms\.gitkeep" />
+    <None Include="Forms\Security Forms\.gitkeep" />
+    <None Include="Forms\Ward Forms\.gitkeep" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -79,9 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="Forms\Billing Forms\" />
-    <Folder Include="Forms\Doctor Forms\" />
-    <Folder Include="Forms\Patient Forms\" />
     <Folder Include="Helpers\" />
     <Folder Include="Models\" />
   </ItemGroup>
