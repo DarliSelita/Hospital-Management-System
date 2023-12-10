@@ -46,12 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DBContent.cs" />
+    <Compile Include="Database\SeedData.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LoggingHelper.cs" />
+    <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Models\BillingModel.cs" />
+    <Compile Include="Models\DiagnosticModel.cs" />
+    <Compile Include="Models\DoctorModel.cs" />
+    <Compile Include="Models\EmergencyModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\PatientModel.cs" />
+    <Compile Include="Models\PharmacyModel.cs" />
+    <Compile Include="Models\ReportModel.cs" />
+    <Compile Include="Models\WardModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -63,6 +77,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Database\Migrations\.gitkeep" />
     <None Include="Forms\.gitkeep" />
     <None Include="Forms\Appointment Forms\.gitkeep" />
     <None Include="Forms\Billing Forms\.gitkeep" />
@@ -87,10 +102,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
