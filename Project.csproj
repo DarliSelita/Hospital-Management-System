@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Appointment Forms\Appointmentgg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -78,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="Forms\" />
+    <Folder Include="Forms\Billing Forms\" />
+    <Folder Include="Forms\Doctor Forms\" />
+    <Folder Include="Forms\Patient Forms\" />
     <Folder Include="Helpers\" />
     <Folder Include="Models\" />
   </ItemGroup>
