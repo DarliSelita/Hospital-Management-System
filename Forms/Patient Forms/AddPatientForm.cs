@@ -65,22 +65,22 @@ namespace HospitalManagementSystem.Forms.PatientForms
             btnAddPatient.Text = "Add Patient";
             btnAddPatient.Location = new System.Drawing.Point(150, 260);
             btnAddPatient.Click += btnAddPatient_Click;
-            btnAddPatient.Size = new System.Drawing.Size(150, 40); // Set a larger size for the button
-            btnAddPatient.BackColor = System.Drawing.Color.FromArgb(0, 123, 255); // Set a hospital-blue background color
-            btnAddPatient.ForeColor = System.Drawing.Color.White; // Set button text color
+            btnAddPatient.Size = new System.Drawing.Size(150, 40); 
+            btnAddPatient.BackColor = System.Drawing.Color.FromArgb(0, 123, 255); 
+            btnAddPatient.ForeColor = System.Drawing.Color.White; 
             btnAddPatient.Font = new System.Drawing.Font("Open Sans", 12, System.Drawing.FontStyle.Bold);
-            btnAddPatient.FlatStyle = FlatStyle.Flat; // Optional: Use a flat style for a modern look
-            btnAddPatient.FlatAppearance.BorderSize = 0; // Optional: Remove the border
+            btnAddPatient.FlatStyle = FlatStyle.Flat; 
+            btnAddPatient.FlatAppearance.BorderSize = 0; 
 
             pictureContainer = new PictureBox();
             pictureContainer.Name = "pictureContainer";
             pictureContainer.Location = new System.Drawing.Point(400, 50);
             pictureContainer.Size = new System.Drawing.Size(200, 200);
-            pictureContainer.BorderStyle = BorderStyle.FixedSingle; // Optional: Add a border to the picture container
+            pictureContainer.BorderStyle = BorderStyle.FixedSingle; 
             pictureContainer.ImageLocation = "C:\\Users\\user\\Desktop\\vllok\\Resources\\profilepic.png"; // Replace with the actual path to your image
 
 
-            // Add these controls to the form's Controls collection
+            // Form's Controls collection
             Controls.Add(txtPatientName);
             Controls.Add(txtSurname);
             Controls.Add(dateOfBirthPicker);
@@ -90,7 +90,7 @@ namespace HospitalManagementSystem.Forms.PatientForms
             Controls.Add(txtAssignedDoctor);
             Controls.Add(btnAddPatient);
 
-            // Add labels
+            // Labels
             Controls.Add(new Label { Text = "Name:", Location = new System.Drawing.Point(50, 50) });
             Controls.Add(new Label { Text = "Surname:", Location = new System.Drawing.Point(50, 80) });
             Controls.Add(new Label { Text = "Date of Birth:", Location = new System.Drawing.Point(50, 110) });
@@ -102,7 +102,7 @@ namespace HospitalManagementSystem.Forms.PatientForms
 
         private void btnAddPatient_Click(object sender, EventArgs e)
         {
-            // Perform input validation
+            // Input validation
             if (string.IsNullOrWhiteSpace(txtPatientName.Text) || string.IsNullOrWhiteSpace(txtPhoneNumber.Text))
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
