@@ -13,7 +13,7 @@ namespace HospitalManagementSystem.Forms.PatientForms
         private TextBox txtEmail;
         private TextBox txtAssignedDoctor;
         private Button btnAddPatient;
-
+        private PictureBox pictureContainer;
 
         public AddPatientForm()
         {
@@ -65,6 +65,20 @@ namespace HospitalManagementSystem.Forms.PatientForms
             btnAddPatient.Text = "Add Patient";
             btnAddPatient.Location = new System.Drawing.Point(150, 260);
             btnAddPatient.Click += btnAddPatient_Click;
+            btnAddPatient.Size = new System.Drawing.Size(150, 40); // Set a larger size for the button
+            btnAddPatient.BackColor = System.Drawing.Color.FromArgb(0, 123, 255); // Set a hospital-blue background color
+            btnAddPatient.ForeColor = System.Drawing.Color.White; // Set button text color
+            btnAddPatient.Font = new System.Drawing.Font("Open Sans", 12, System.Drawing.FontStyle.Bold);
+            btnAddPatient.FlatStyle = FlatStyle.Flat; // Optional: Use a flat style for a modern look
+            btnAddPatient.FlatAppearance.BorderSize = 0; // Optional: Remove the border
+
+            pictureContainer = new PictureBox();
+            pictureContainer.Name = "pictureContainer";
+            pictureContainer.Location = new System.Drawing.Point(400, 50);
+            pictureContainer.Size = new System.Drawing.Size(200, 200);
+            pictureContainer.BorderStyle = BorderStyle.FixedSingle; // Optional: Add a border to the picture container
+            pictureContainer.ImageLocation = "C:\\Users\\user\\Desktop\\vllok\\Resources\\profilepic.png"; // Replace with the actual path to your image
+
 
             // Add these controls to the form's Controls collection
             Controls.Add(txtPatientName);
@@ -104,10 +118,11 @@ namespace HospitalManagementSystem.Forms.PatientForms
             // 
             // AddPatientForm
             // 
-            this.ClientSize = new System.Drawing.Size(500, 350);
+            this.ClientSize = new System.Drawing.Size(998, 470);
             this.Name = "AddPatientForm";
             this.Load += new System.EventHandler(this.AddPatientForm_Load);
             this.ResumeLayout(false);
+
         }
 
         private void AddPatientForm_Load(object sender, EventArgs e)
@@ -116,3 +131,23 @@ namespace HospitalManagementSystem.Forms.PatientForms
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

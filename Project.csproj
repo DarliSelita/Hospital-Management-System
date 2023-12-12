@@ -71,9 +71,6 @@
     <Compile Include="Models\WardModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Patient Forms\AddPatientForm.resx">
       <DependentUpon>AddPatientForm.cs</DependentUpon>
     </EmbeddedResource>
