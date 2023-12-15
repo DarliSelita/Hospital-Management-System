@@ -135,7 +135,39 @@ namespace HospitalManagementSystem.Forms.PatientForms
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // Create a new patient object with the form data
+            var newPatient = new Patient
+            {
+                Name = txtPatientName.Text,
+                Surname = txtSurname.Text,
+                DateOfBirth = dateOfBirthPicker.Value,
+                FileNumber = txtFileNumber.Text,
+                PhoneNumber = txtPhoneNumber.Text,
+                Email = txtEmail.Text,
+                AssignedDoctor = txtAssignedDoctor.Text
+            };
+
+            try
+            {
+                // Save the new patient to the database
+                using (var dbContext = new YourDbContext())
+                {
+                    dbContext.Patients.Add(newPatient);
+                    dbContext.SaveChanges();
+                }
+
+                // Display success message
+                MessageBox.Show("Patient added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Log or display detailed error information
+                MessageBox.Show($"An error occurred: {ex.Message}\n\nInner Exception: {ex.InnerException?.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
+
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -153,6 +185,8 @@ namespace HospitalManagementSystem.Forms.PatientForms
         {
 
         }
+
+
     }
 
 }

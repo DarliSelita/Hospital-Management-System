@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HospitalManagementSystem.Forms.PatientForms;
+using Project.Forms.Patient_Forms;
 
 namespace Project
 {
