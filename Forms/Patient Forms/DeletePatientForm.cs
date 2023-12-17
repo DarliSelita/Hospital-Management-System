@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using HospitalManagementSystem.Database; // Assuming your database namespace
+using HospitalManagementSystem.Database;
 
 namespace HospitalManagementSystem.Forms.PatientForms
 {
     public partial class DeletePatientForm : Form
     {
-        private Patient patientToDelete; // Assuming you have a Patient class
+        private readonly Patient patientToDelete; // Marking it as readonly
 
         public DeletePatientForm(Patient patient)
         {
@@ -67,15 +67,15 @@ namespace HospitalManagementSystem.Forms.PatientForms
                     dbContext.SaveChanges();
 
                     MessageBox.Show("Patient deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Optionally, you can close the form after deleting the patient
-                    this.Close();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error deleting patient: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
+            // Close the form after deleting the patient
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
