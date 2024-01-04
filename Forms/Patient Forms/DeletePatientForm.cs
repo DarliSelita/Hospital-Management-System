@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using HospitalManagementSystem.Database;
 
@@ -43,12 +44,15 @@ namespace HospitalManagementSystem.Forms.PatientForms
                 Text = "Cancel",
                 Location = new System.Drawing.Point(300, 100),
                 Size = new System.Drawing.Size(100, 40),
-                BackColor = System.Drawing.Color.FromArgb(0, 123, 255),
+
                 ForeColor = System.Drawing.Color.White,
-                Font = new System.Drawing.Font("Open Sans", 12, System.Drawing.FontStyle.Bold),
+            
                 FlatStyle = FlatStyle.Flat,
-                FlatAppearance = { BorderSize = 0 }
-            };
+                FlatAppearance = { BorderSize = 0 },
+                BackColor = Color.LightBlue,
+                Padding = new Padding(6),
+                Font = new Font("French Script MT", 18)
+        };
             btnCancel.Click += btnCancel_Click;
 
             Controls.Add(lblConfirmation);

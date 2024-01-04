@@ -271,6 +271,12 @@
       <DependentUpon>AddAppointmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Appointment Forms\Appointment.cs" />
+    <Compile Include="Forms\Appointment Forms\AppointmentDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Appointment Forms\AppointmentDetailsForm.Designer.cs">
+      <DependentUpon>AppointmentDetailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Appointment Forms\DeleteAppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -334,11 +340,17 @@
     <EmbeddedResource Include="Forms\Appointment Forms\AddAppointmentForm.resx">
       <DependentUpon>AddAppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Appointment Forms\ViewAppointmentForm.resx">
+      <DependentUpon>ViewAppointmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Patient Forms\AddPatientForm.resx">
       <DependentUpon>AddPatientForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Patient Forms\DeletePatientForm.resx">
       <DependentUpon>DeletePatientForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Patient Forms\PatientDetailsForm.resx">
+      <DependentUpon>PatientDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Patient Forms\UpdatePatientForm.resx">
       <DependentUpon>UpdatePatientForm.cs</DependentUpon>
@@ -361,12 +373,11 @@
     <None Include="Forms\Appointment Forms\.gitkeep" />
     <None Include="Forms\Billing Forms\.gitkeep" />
     <None Include="Forms\Diagnostic Forms\.gitkeep" />
-    <None Include="Forms\Doctor Forms\.gitkeep" />
+    <None Include="Forms\Emergency Forms\.gitkeep" />
     <None Include="Forms\Employee Forms\.gitkeep" />
     <None Include="Forms\Integration Forms\.gitkeep" />
     <None Include="Forms\Patient Forms\.gitkeep" />
-    <None Include="Forms\Reporting Forms\.gitkeep" />
-    <None Include="Forms\Security Forms\.gitkeep" />
+    <None Include="Forms\Pharmacy Forms\.gitkeep" />
     <None Include="Forms\Ward Forms\.gitkeep" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -388,6 +399,7 @@
   <ItemGroup>
     <None Include="Resources\patient logo.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Data.SqlClient.SNI.5.1.1\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('packages\Microsoft.Data.SqlClient.SNI.5.1.1\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

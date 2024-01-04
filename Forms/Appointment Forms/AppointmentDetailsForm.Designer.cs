@@ -1,6 +1,6 @@
-﻿namespace Project.Forms.Patient_Forms
+﻿namespace Project.Forms.Appointment_Forms
 {
-    partial class PatientDetailsForm
+    partial class AppointmentDetailsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // PatientDetailsForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "PatientDetailsForm";
-            this.Text = "PatientDetailsForm";
-            this.Load += new System.EventHandler(this.PatientDetailsForm_Load);
-            this.ResumeLayout(false);
-
+            this.Text = "AppointmentDetailsForm";
         }
 
         #endregion

@@ -102,5 +102,10 @@ namespace Project.Forms.Patient_Forms
 
         protected abstract void DisplayPatientDetails();
         protected abstract void UpdatePatient();
+
+        private void PatientDetailsForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

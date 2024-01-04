@@ -1,20 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using HospitalManagementSystem.Database;
 
 namespace Project.Forms.Appointment_Forms
 {
     public partial class DeleteAppointmentForm : Form
     {
-        public DeleteAppointmentForm()
+        private readonly Appointment appointmentToDelete; // Marking it as readonly
+
+        public DeleteAppointmentForm(Appointment appointment)
         {
             InitializeComponent();
+            appointmentToDelete = appointment;
+            InitializeUIComponents();
+        }
+
+        private void InitializeUIComponents()
+        {
+            // Initialize labels and buttons as needed
+            var lblConfirmation = new Label
+            {
+                Text = $"Are you sure you want to delete the appointment for {appointmentToDelete.PatientName}?",
+                Location = new System.Drawing.Point(50, 50),
+                AutoSize = true
+            };
+
+            var btnDelete = new Button
+            {
+                Text = "Delete",
+                Location = new System.Drawing.Point(150, 100),
+                Size = new System.Drawing.Size(100, 40),
+                BackColor = System.Drawing.Color.FromArgb(255, 0, 0),
+                ForeColor = System.Drawing.Color.White,
+                Font = new System.Drawing.Font("Open Sans", 12, System.Drawing.FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = { BorderSize = 0 }
+            };
+            btnDelete.Click += btnDelete_Click;
+
+            var btnCancel = new Button
+            {
+                Text = "Cancel",
+                Location = new System.Drawing.Point(300, 100),
+                Size = new System.Drawing.Size(100, 40),
+                ForeColor = System.Drawing.Color.White,
+                FlatStyle = FlatStyle.Flat,
+                FlatAppearance = { BorderSize = 0 },
+                BackColor = Color.LightBlue,
+                Padding = new Padding(6),
+                Font = new Font("French Script MT", 18)
+            };
+            btnCancel.Click += btnCancel_Click;
+
+            Controls.Add(lblConfirmation);
+            Controls.Add(btnDelete);
+            Controls.Add(btnCancel);
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Perform the deletion logic here
+            using (var dbContext = new YourDbContext()) // Replace with your actual DbContext
+            {
+                try
+                {
+                    dbContext.Appointments.Remove(appointmentToDelete);
+                    dbContext.SaveChanges();
+
+                    MessageBox.Show("Appointment deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting appointment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            // Close the form after deleting the appointment
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            // Close the form without deleting the appointment
+            this.Close();
+        }
+
+        private void DeleteAppointmentForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,110 +1,161 @@
-﻿using HospitalManagementSystem.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
+using HospitalManagementSystem.Database;
 
 namespace Project.Forms.Appointment_Forms
 {
     public partial class ViewAppointmentForm : Form
     {
-        protected TextBox txtPatientName;
-        protected TextBox txtPatientFileNumber;
-        protected DateTimePicker dateTimePicker;
-        protected TextBox txtDoctor;
-        protected ComboBox cmbAppointmentType;
-        protected PictureBox pictureBox1;
-        protected PictureBox pictureBox2;
+        private DataGridView dataGridView;
+        private Button btnAddAppointment;
+        private Button btnUpdateAppointment;
+        private Button btnDeleteAppointment;
 
-        public ViewAppointmentForm(Appointment appointment)
+        public ViewAppointmentForm()
         {
             InitializeComponent();
-            InitializeCommonUIComponents();
-            DisplayAppointmentDetails(appointment);
+            InitializeUIComponents();
+            LoadAppointmentData();
         }
 
-        protected void InitializeCommonUIComponents()
+        private void InitializeUIComponents()
         {
-            // Common UI initialization logic for appointment-related forms
-            txtPatientName = new TextBox();
-            txtPatientName.Name = "txtPatientName";
-            txtPatientName.Location = new System.Drawing.Point(150, 50);
-            txtPatientName.Size = new System.Drawing.Size(200, 20);
-            txtPatientName.ReadOnly = true;
+            dataGridView = new DataGridView();
+            dataGridView.Name = "dataGridView";
+            dataGridView.Location = new Point(50, 50);
+            dataGridView.Size = new Size(500, 200);
+            dataGridView.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            txtPatientFileNumber = new TextBox();
-            txtPatientFileNumber.Name = "txtPatientFileNumber";
-            txtPatientFileNumber.Location = new System.Drawing.Point(150, 80);
-            txtPatientFileNumber.Size = new System.Drawing.Size(200, 20);
-            txtPatientFileNumber.ReadOnly = true;
+            btnAddAppointment = CreateIconButton("btnAddAppointment", IconChar.Plus, Color.Black, Color.Green);
+            btnAddAppointment.Location = new Point(50, 280);
+            btnAddAppointment.Click += btnAddAppointment_Click;
 
-            dateTimePicker = new DateTimePicker();
-            dateTimePicker.Name = "dateTimePicker";
-            dateTimePicker.Location = new System.Drawing.Point(150, 110);
-            dateTimePicker.Size = new System.Drawing.Size(200, 20);
-            dateTimePicker.Enabled = false;
+            btnUpdateAppointment = CreateIconButton("btnUpdateAppointment", IconChar.Edit, Color.Black, Color.Yellow);
+            btnUpdateAppointment.Location = new Point(180, 280);
+            btnUpdateAppointment.Click += btnUpdateAppointment_Click;
 
-            txtDoctor = new TextBox();
-            txtDoctor.Name = "txtDoctor";
-            txtDoctor.Location = new System.Drawing.Point(150, 140);
-            txtDoctor.Size = new System.Drawing.Size(200, 20);
-            txtDoctor.ReadOnly = true;
+            btnDeleteAppointment = CreateIconButton("btnDeleteAppointment", IconChar.TrashAlt, Color.Black, Color.Red);
+            btnDeleteAppointment.Location = new Point(310, 280);
+            btnDeleteAppointment.Click += btnDeleteAppointment_Click;
 
-            cmbAppointmentType = new ComboBox();
-            cmbAppointmentType.Name = "cmbAppointmentType";
-            cmbAppointmentType.Location = new System.Drawing.Point(150, 170);
-            cmbAppointmentType.Size = new System.Drawing.Size(200, 20);
-            cmbAppointmentType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbAppointmentType.Enabled = false;
-            cmbAppointmentType.Items.AddRange(Enum.GetNames(typeof(AppointmentType)));
+            SetAnchorStyles(dataGridView, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+            SetAnchorStyles(btnAddAppointment, AnchorStyles.Top | AnchorStyles.Left);
+            SetAnchorStyles(btnUpdateAppointment, AnchorStyles.Top | AnchorStyles.Left);
+            SetAnchorStyles(btnDeleteAppointment, AnchorStyles.Top | AnchorStyles.Right);
 
-            // Initialize pictureBox1 (hospital logo) at the bottom right
-            pictureBox1 = new PictureBox();
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Location = new System.Drawing.Point(500, 320);
-            pictureBox1.Size = new System.Drawing.Size(150, 75);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.Image = Image.FromFile(Path.Combine("C:\\Users\\user\\Desktop\\Project\\Resources", "hospital logo.png"));
-
-            // Initialize pictureBox2 (patient logo) to the right of input fields
-            pictureBox2 = new PictureBox();
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Location = new System.Drawing.Point(440, 80);
-            pictureBox2.Size = new System.Drawing.Size(150, 130);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.Image = Image.FromFile(Path.Combine("C:\\Users\\user\\Desktop\\Project\\Resources", "patient logo.jpg"));
-
-            // Add these controls to the form's Controls collection
-            Controls.Add(txtPatientName);
-            Controls.Add(txtPatientFileNumber);
-            Controls.Add(dateTimePicker);
-            Controls.Add(txtDoctor);
-            Controls.Add(cmbAppointmentType);
-            Controls.Add(pictureBox1);
-            Controls.Add(pictureBox2);
-
-            // Add labels
-            Controls.Add(new Label { Text = "Patient Name:", Location = new System.Drawing.Point(50, 50) });
-            Controls.Add(new Label { Text = "Patient File Number:", Location = new System.Drawing.Point(50, 80) });
-            Controls.Add(new Label { Text = "Date and Time:", Location = new System.Drawing.Point(50, 110) });
-            Controls.Add(new Label { Text = "Doctor:", Location = new System.Drawing.Point(50, 140) });
-            Controls.Add(new Label { Text = "Appointment Type:", Location = new System.Drawing.Point(50, 170) });
+            Controls.Add(dataGridView);
+            Controls.Add(btnAddAppointment);
+            Controls.Add(btnUpdateAppointment);
+            Controls.Add(btnDeleteAppointment);
         }
 
-        protected void DisplayAppointmentDetails(Appointment appointment)
+        private Button CreateIconButton(string name, IconChar icon, Color foreColor, Color backColor)
         {
-            // Display appointment details in the form controls
-            txtPatientName.Text = appointment.PatientName;
-            txtPatientFileNumber.Text = appointment.PatientFileNumber;
-            dateTimePicker.Value = appointment.ScheduleHour;
-            txtDoctor.Text = appointment.DoctorName;
-            cmbAppointmentType.SelectedItem = appointment.Type.ToString();
+            Button button = new Button();
+            button.Name = name;
+            button.Size = new Size(120, 40);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.BackColor = backColor;
+            button.ForeColor = foreColor;
+            button.Image = icon.ToBitmap(foreColor, 20, 20);
+            return button;
+        }
+
+        private void LoadAppointmentData()
+        {
+            using (var dbContext = new YourDbContext())
+            {
+                List<Appointment> appointments = dbContext.Appointments.ToList();
+                DataTable dataTable = ConvertToDataTable(appointments);
+                dataGridView.DataSource = dataTable;
+            }
+        }
+
+        private void btnAddAppointment_Click(object sender, EventArgs e)
+        {
+            AddAppointmentForm addAppointmentForm = new AddAppointmentForm();
+            addAppointmentForm.ShowDialog();
+            LoadAppointmentData();
+        }
+
+        private void btnUpdateAppointment_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count > 0)
+            {
+                int selectedAppointmentId = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
+                using (var dbContext = new YourDbContext())
+                {
+                    Appointment selectedAppointment = dbContext.Appointments.Find(selectedAppointmentId);
+                    UpdateAppointmentForm updateAppointmentForm = new UpdateAppointmentForm(selectedAppointment);
+                    updateAppointmentForm.ShowDialog();
+                    LoadAppointmentData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an appointment to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnDeleteAppointment_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count > 0)
+            {
+                int selectedAppointmentId = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
+                using (var dbContext = new YourDbContext())
+                {
+                    Appointment selectedAppointment = dbContext.Appointments.Find(selectedAppointmentId);
+                    DeleteAppointmentForm deleteAppointmentForm = new DeleteAppointmentForm(selectedAppointment);
+                    deleteAppointmentForm.ShowDialog();
+                    LoadAppointmentData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an appointment to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private DataTable ConvertToDataTable(List<Appointment> appointments)
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("PatientName", typeof(string));
+            dataTable.Columns.Add("PatientFileNumber", typeof(string));
+            dataTable.Columns.Add("ScheduleHour", typeof(DateTime));
+            dataTable.Columns.Add("DoctorName", typeof(string));
+            dataTable.Columns.Add("Type", typeof(string));
+
+            foreach (var appointment in appointments)
+            {
+                dataTable.Rows.Add(
+                    appointment.Id,
+                    appointment.PatientName,
+                    appointment.PatientFileNumber,
+                    appointment.ScheduleHour,
+                    appointment.DoctorName,
+                    appointment.Type.ToString());
+            }
+
+            return dataTable;
+        }
+
+        private void SetAnchorStyles(Control control, AnchorStyles anchorStyles)
+        {
+            control.Anchor = anchorStyles;
+        }
+
+        private void ViewAppointmentForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
