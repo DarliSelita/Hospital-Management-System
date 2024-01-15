@@ -16,6 +16,6 @@ public class ChronicIllness
     [ForeignKey("Diagnostic")]
     public string PatientFile { get; set; }
 
-    // Navigation property
+    
     public Diagnostic Diagnostic { get; set; }
 }
