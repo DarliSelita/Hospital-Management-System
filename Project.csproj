@@ -366,6 +366,21 @@
     <Compile Include="Forms\Billing Forms\ViewInvoiceForm.Designer.cs">
       <DependentUpon>ViewInvoiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Diagnostic Forms\AddDiagnosticForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Diagnostic Forms\AddDiagnosticForm.Designer.cs">
+      <DependentUpon>AddDiagnosticForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Diagnostic Forms\ChronicIllness.cs" />
+    <Compile Include="Forms\Diagnostic Forms\CreatePatientRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Diagnostic Forms\CreatePatientRecord.Designer.cs">
+      <DependentUpon>CreatePatientRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Diagnostic Forms\Diagnostic.cs" />
+    <Compile Include="Forms\Diagnostic Forms\MedicalTest.cs" />
     <Compile Include="Forms\Patient Forms\AddPatientForm.cs">
       <SubType>Form</SubType>
     </Compile>

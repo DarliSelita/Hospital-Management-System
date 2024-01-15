@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Project.Forms.Appointment_Forms;
 using Project.Forms.Billing_Forms;
+using Project.Forms.Diagnostic_Forms;
 
 namespace Project
 {
@@ -18,7 +19,7 @@ namespace Project
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ViewInvoiceForm());
+            Application.Run(new CreatePatientRecord());
         }
     }
 }
