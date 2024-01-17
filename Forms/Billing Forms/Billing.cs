@@ -13,6 +13,6 @@ public class Billing
     // Navigation property for associated products
     public List<Product> Products { get; set; } = new List<Product>();
 
-    // Calculate the total amount based on product prices
+    // Calculate the total amount based on product prices.
     public double TotalAmount => Products.Sum(product => product.Price);
 }
