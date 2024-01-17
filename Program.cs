@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Project.Forms.Appointment_Forms;
 using Project.Forms.Billing_Forms;
 using Project.Forms.Diagnostic_Forms;
+using Project.Forms.Patient_Forms;
 
 namespace Project
 {
@@ -19,7 +20,7 @@ namespace Project
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CreatePatientRecord());
+            Application.Run(new ViewPatientForm());
         }
     }
 }

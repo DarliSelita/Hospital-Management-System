@@ -366,21 +366,27 @@
     <Compile Include="Forms\Billing Forms\ViewInvoiceForm.Designer.cs">
       <DependentUpon>ViewInvoiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Diagnostic Forms\ChronicIllness.cs" />
     <Compile Include="Forms\Diagnostic Forms\AddDiagnosticForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Diagnostic Forms\AddDiagnosticForm.Designer.cs">
       <DependentUpon>AddDiagnosticForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Diagnostic Forms\ChronicIllness.cs" />
-    <Compile Include="Forms\Diagnostic Forms\CreatePatientRecord.cs">
+    <Compile Include="Forms\Diagnostic Forms\DeleteDiagnosticForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Diagnostic Forms\CreatePatientRecord.Designer.cs">
-      <DependentUpon>CreatePatientRecord.cs</DependentUpon>
+    <Compile Include="Forms\Diagnostic Forms\DeleteDiagnosticForm.Designer.cs">
+      <DependentUpon>DeleteDiagnosticForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Diagnostic Forms\Diagnostic.cs" />
     <Compile Include="Forms\Diagnostic Forms\MedicalTest.cs" />
+    <Compile Include="Forms\Diagnostic Forms\UpdateDiagnosticForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Diagnostic Forms\UpdateDiagnosticForm.Designer.cs">
+      <DependentUpon>UpdateDiagnosticForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Patient Forms\AddPatientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,13 +417,6 @@
     </Compile>
     <Compile Include="Helpers\LoggingHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
-    <Compile Include="Models\AppointmentModel.cs" />
-    <Compile Include="Models\BillingModel.cs" />
-    <Compile Include="Models\DiagnosticModel.cs" />
-    <Compile Include="Models\EmergencyModel.cs" />
-    <Compile Include="Models\EmployeeModel.cs" />
-    <Compile Include="Models\PatientModel.cs" />
-    <Compile Include="Models\PharmacyModel.cs" />
     <Compile Include="Models\WardModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -429,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Billing Forms\AddInvoiceForm.resx">
       <DependentUpon>AddInvoiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Diagnostic Forms\AddDiagnosticForm.resx">
+      <DependentUpon>AddDiagnosticForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Patient Forms\AddPatientForm.resx">
       <DependentUpon>AddPatientForm.cs</DependentUpon>
@@ -457,9 +459,7 @@
     </Compile>
     <None Include="Database\Migrations\.gitkeep" />
     <None Include="Forms\.gitkeep" />
-    <None Include="Forms\Appointment Forms\.gitkeep" />
     <None Include="Forms\Diagnostic Forms\.gitkeep" />
-    <None Include="Forms\Emergency Forms\.gitkeep" />
     <None Include="Forms\Employee Forms\.gitkeep" />
     <None Include="Forms\Integration Forms\.gitkeep" />
     <None Include="Forms\Patient Forms\.gitkeep" />

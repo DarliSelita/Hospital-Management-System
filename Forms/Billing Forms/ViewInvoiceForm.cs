@@ -41,9 +41,9 @@ namespace Project.Forms.Billing_Forms
             dgvInvoices.Columns.Add("PatientName", "Patient Name");
             dgvInvoices.Columns.Add("BillingDate", "Billing Date");
 
-            Button btnAddInvoice = CreateIconButton("btnAddInvoice", IconChar.Plus, Color.Black, Color.Green);
-            Button btnUpdateInvoice = CreateIconButton("btnUpdateInvoice", IconChar.Edit, Color.Black, Color.Yellow);
-            Button btnDeleteInvoice = CreateIconButton("btnDeleteInvoice", IconChar.TrashAlt, Color.Black, Color.Red);
+            Button btnAddInvoice = CreateIconButton("btnAddInvoice", IconChar.PlusSquare, Color.Black, Color.Green);
+            Button btnUpdateInvoice = CreateIconButton("btnUpdateInvoice", IconChar.PenToSquare, Color.Black, Color.Yellow);
+            Button btnDeleteInvoice = CreateIconButton("btnDeleteInvoice", IconChar.Trash, Color.Black, Color.Red);
             Button btnDownloadPDF = CreateIconButton("btnDownloadPDF", IconChar.FilePdf, Color.Black, Color.White);
 
             SetButtonLocation(btnAddInvoice, 50, 270);
@@ -68,13 +68,31 @@ namespace Project.Forms.Billing_Forms
         private void LoadInvoices()
         {
             dgvInvoices.Rows.Clear();
-            var invoices = DbContext.Billing.ToList();
+            var invoices = DbContext.Billing.Include(b => b.Products).ToList();
 
             foreach (var invoice in invoices)
             {
-                dgvInvoices.Rows.Add(invoice.BillingID, invoice.PatientName, invoice.BillingDate);
+                foreach (var product in invoice.Products)
+                {
+                    dgvInvoices.Rows.Add(
+                        invoice.BillingID,
+                        invoice.PatientName,
+                        invoice.BillingDate,
+                        product.ProductID,
+                        product.ServiceName,
+                        product.Price
+                    );
+                }
+            }
+
+            // Set AutoSizeMode to Fill for each column
+            foreach (DataGridViewColumn column in dgvInvoices.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
+
+
 
         private void dgvInvoices_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -259,5 +277,8 @@ namespace Project.Forms.Billing_Forms
         {
             button.Location = new Point(x, y);
         }
+
+
+
     }
 }
