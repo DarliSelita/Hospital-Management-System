@@ -11,16 +11,32 @@ using Project.Forms.Appointment_Forms;
 using Project.Forms.Pharmacy_Forms;
 using Project.Forms.Billing_Forms;
 using HospitalManagementSystem.Forms;
+using HospitalManagementSystem.Database;
 
 namespace Project.Forms.Employee_Forms
 {
     public partial class ReceptionistDashboard : Form
     {
+        private YourDbContext dbContext;
+
         public ReceptionistDashboard(string username)
         {
             InitializeComponent();
             SetUserName(username);
+            dbContext = new YourDbContext();
+            DisplayCounts();
 
+        }
+
+        private void DisplayCounts()
+        {
+            int patientCount = dbContext.Patients.Count();
+            int appointmentCount = dbContext.Appointments.Count();
+            int prescriptionCount = dbContext.Prescriptions.Count();
+
+            PatientCountLabel.Text = $"{patientCount}";
+            AppointmentCountLabel.Text = $"{appointmentCount}";
+            PrescriptionCountLabel.Text = $"{prescriptionCount}";
         }
 
         public void SetUserName(string username)
@@ -75,6 +91,12 @@ namespace Project.Forms.Employee_Forms
         {
             ViewAppointmentForm ap = new ViewAppointmentForm();
             ap.Show();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+
         }
     }
 }

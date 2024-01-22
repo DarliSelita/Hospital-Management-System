@@ -67,31 +67,31 @@ namespace HospitalManagementSystem.Forms
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Location = new Point(150, 20);
             txtFirstName.Size = new Size(200, 20);
-            txtFirstName.Font = new Font("Open Sans", 14);
+            txtFirstName.Font = new Font("Open Sans", 11);
 
             txtLastName = new TextBox();
             txtLastName.Name = "txtLastName";
             txtLastName.Location = new Point(150, 50);
             txtLastName.Size = new Size(200, 20);
-            txtLastName.Font = new Font("Open Sans", 14);
+            txtLastName.Font = new Font("Open Sans", 11);
 
             dateOfBirthPicker = new DateTimePicker();
             dateOfBirthPicker.Name = "dateOfBirthPicker";
             dateOfBirthPicker.Location = new Point(150, 80);
             dateOfBirthPicker.Size = new Size(200, 20);
-            dateOfBirthPicker.Font = new Font("Open Sans", 14);
+            dateOfBirthPicker.Font = new Font("Open Sans", 11);
 
             txtPhoneNumber = new TextBox();
             txtPhoneNumber.Name = "txtPhoneNumber";
             txtPhoneNumber.Location = new Point(150, 110);
             txtPhoneNumber.Size = new Size(200, 20);
-            txtPhoneNumber.Font = new Font("Open Sans", 14);
+            txtPhoneNumber.Font = new Font("Open Sans", 11);
 
             txtEmail = new TextBox();
             txtEmail.Name = "txtEmail";
             txtEmail.Location = new Point(150, 140);
             txtEmail.Size = new Size(200, 20);
-            txtEmail.Font = new Font("Open Sans", 14);
+            txtEmail.Font = new Font("Open Sans", 11);
 
             // Initialize textboxes for PatientDetails information
             txtAddress = new TextBox();
@@ -104,13 +104,13 @@ namespace HospitalManagementSystem.Forms
             txtEmergencyContactName.Name = "txtEmergencyContactName";
             txtEmergencyContactName.Location = new Point(150, 200);
             txtEmergencyContactName.Size = new Size(200, 20);
-            txtEmergencyContactName.Font = new Font("Open Sans", 14);
+            txtEmergencyContactName.Font = new Font("Open Sans", 11);
 
             txtEmergencyContactNumber = new TextBox();
             txtEmergencyContactNumber.Name = "txtEmergencyContactNumber";
             txtEmergencyContactNumber.Location = new Point(150, 230);
             txtEmergencyContactNumber.Size = new Size(200, 20);
-            txtEmergencyContactNumber.Font = new Font("Open Sans", 14);
+            txtEmergencyContactNumber.Font = new Font("Open Sans", 11);
             // Initialize ComboBox for Diagnoses
             cboDiagnoses = new ComboBox();
             cboDiagnoses.Name = "cboDiagnoses";

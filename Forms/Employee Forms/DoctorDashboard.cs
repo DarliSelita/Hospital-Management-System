@@ -9,16 +9,33 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Project.Forms.Patient_Forms;
 using Project.Forms.Diagnostic_Forms;
+using Microsoft.EntityFrameworkCore;
+using HospitalManagementSystem.Database;
 
 namespace Project.Forms.Employee_Forms
 {
     public partial class DoctorDashboard : Form
     {
+        private YourDbContext dbContext;
+
         public DoctorDashboard(string username)
         {
             InitializeComponent();
             SetUserName(username);
+            dbContext = new YourDbContext();
+            DisplayCounts();
 
+        }
+
+        private void DisplayCounts()
+        {
+            int patientCount = dbContext.Patients.Count();
+            int appointmentCount = dbContext.Appointments.Count();
+            int prescriptionCount = dbContext.Prescriptions.Count();
+
+            PatientCountLabel.Text = $"{patientCount}";
+            AppointmentCountLabel.Text = $"{appointmentCount}";
+            PrescriptionCountLabel.Text = $"{prescriptionCount}";
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -65,6 +82,17 @@ namespace Project.Forms.Employee_Forms
         private void pictureBox6_Click(object sender, EventArgs e)
         {
             MessageBox.Show("You do not have permission to access this feature.");
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+
+        }
+
+        private void AppointmentCountLabel_Click(object sender, EventArgs e)
+        {
 
         }
     }

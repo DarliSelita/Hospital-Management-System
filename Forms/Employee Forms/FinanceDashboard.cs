@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HospitalManagementSystem.Database;
 using HospitalManagementSystem.Forms;
 using Project.Forms.Billing_Forms;
 using Project.Forms.Pharmacy_Forms;
@@ -15,12 +16,27 @@ namespace Project.Forms.Employee_Forms
 {
     public partial class FinanceDashboard : Form
     {
+        private YourDbContext dbContext;
+
         public FinanceDashboard(string username)
         {
             InitializeComponent();
             SetUserName(username);
-
+            dbContext = new YourDbContext();
+            DisplayCounts();
         }
+
+        private void DisplayCounts()
+        {
+            int patientCount = dbContext.Patients.Count();
+            int appointmentCount = dbContext.Appointments.Count();
+            int prescriptionCount = dbContext.Prescriptions.Count();
+
+            PatientCountLabel.Text = $"{patientCount}";
+            AppointmentCountLabel.Text = $"{appointmentCount}";
+            PrescriptionCountLabel.Text = $"{prescriptionCount}";
+        }
+
 
         public void SetUserName(string username)
         {
@@ -79,6 +95,12 @@ namespace Project.Forms.Employee_Forms
                 LogIn lg = new LogIn();
                 lg.Show();
             }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+
         }
     }
 }

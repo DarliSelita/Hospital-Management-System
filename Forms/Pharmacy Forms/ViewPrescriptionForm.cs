@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using QRCoder;
+using PdfSharp.Pdf.IO;
+using System.Drawing.Imaging;
 
 namespace HospitalManagementSystem.Forms
 {
@@ -174,7 +176,7 @@ namespace HospitalManagementSystem.Forms
             }
         }
 
-       
+
         private void GeneratePdf(Prescription prescription)
         {
             using (PdfDocument pdf = new PdfDocument())
@@ -205,15 +207,33 @@ namespace HospitalManagementSystem.Forms
                 graphics.DrawString($"Total Price: {totalPrice}", font, XBrushes.Black, 30, yPosition + 20);
 
                 // Save the PDF
-                string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Prescription.pdf");
-                pdf.Save(filePath);
+                string pdfFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prescription.pdf");
+                pdf.Save(pdfFilePath);
 
                 // Generate QR Code
-                GenerateQrCode(filePath);
+                string qrCodeFilePath = GenerateQrCode(pdfFilePath);
+
+                // Add QR Code to the existing PDF
+                using (PdfDocument existingPdf = PdfReader.Open(pdfFilePath, PdfDocumentOpenMode.Modify))
+                {
+                    PdfPage existingPage = existingPdf.Pages[0];
+                    XGraphics existingGraphics = XGraphics.FromPdfPage(existingPage);
+
+                    // Load QR Code image
+                    XImage qrCodeImage = XImage.FromFile(qrCodeFilePath);
+
+                    // Draw QR Code on the PDF page
+                    existingGraphics.DrawImage(qrCodeImage, existingPage.Width.Point - qrCodeImage.PixelWidth, existingPage.Height.Point - qrCodeImage.PixelHeight);
+                }
+
+                // Save the modified PDF
+                pdf.Save(pdfFilePath);
+
+                MessageBox.Show("PDF generated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void GenerateQrCode(string filePath)
+        private string GenerateQrCode(string filePath)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(filePath, QRCodeGenerator.ECCLevel.Q);
@@ -221,11 +241,21 @@ namespace HospitalManagementSystem.Forms
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
 
             // Save the QR Code image
-            string qrCodeImagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PrescriptionQRCode.png");
-            qrCodeImage.Save(qrCodeImagePath);
+            string qrCodeImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PrescriptionQRCode.png");
 
-            MessageBox.Show("QR Code generated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Ensure proper disposal of resources
+            using (FileStream stream = new FileStream(qrCodeImagePath, FileMode.Create))
+            {
+                qrCodeImage.Save(stream, ImageFormat.Png);
+            }
+
+            // Dispose of the QR Code image
+            qrCodeImage.Dispose();
+
+            return qrCodeImagePath;
         }
+
+
 
         private void LoadPrescriptionData()
         {

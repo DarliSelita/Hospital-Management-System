@@ -44,6 +44,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.PatientCountLabel = new System.Windows.Forms.Label();
+            this.AppointmentCountLabel = new System.Windows.Forms.Label();
+            this.PrescriptionCountLabel = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -119,7 +126,7 @@
             this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(963, 14);
+            this.pictureBox5.Location = new System.Drawing.Point(884, 14);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(57, 58);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -239,12 +246,101 @@
             this.label1.TabIndex = 45;
             this.label1.Text = "Hospital Management System";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("OCR A Extended", 25.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.LightSeaGreen;
+            this.label8.Location = new System.Drawing.Point(958, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(44, 43);
+            this.label8.TabIndex = 60;
+            this.label8.Text = "-";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
+            // PatientCountLabel
+            // 
+            this.PatientCountLabel.AutoSize = true;
+            this.PatientCountLabel.BackColor = System.Drawing.Color.Transparent;
+            this.PatientCountLabel.Font = new System.Drawing.Font("Niagara Solid", 20F, System.Drawing.FontStyle.Bold);
+            this.PatientCountLabel.ForeColor = System.Drawing.Color.Crimson;
+            this.PatientCountLabel.Location = new System.Drawing.Point(67, 173);
+            this.PatientCountLabel.Name = "PatientCountLabel";
+            this.PatientCountLabel.Size = new System.Drawing.Size(0, 36);
+            this.PatientCountLabel.TabIndex = 66;
+            // 
+            // AppointmentCountLabel
+            // 
+            this.AppointmentCountLabel.AutoSize = true;
+            this.AppointmentCountLabel.BackColor = System.Drawing.Color.Transparent;
+            this.AppointmentCountLabel.Font = new System.Drawing.Font("Niagara Solid", 20F, System.Drawing.FontStyle.Bold);
+            this.AppointmentCountLabel.ForeColor = System.Drawing.Color.Crimson;
+            this.AppointmentCountLabel.Location = new System.Drawing.Point(406, 173);
+            this.AppointmentCountLabel.Name = "AppointmentCountLabel";
+            this.AppointmentCountLabel.Size = new System.Drawing.Size(0, 36);
+            this.AppointmentCountLabel.TabIndex = 65;
+            // 
+            // PrescriptionCountLabel
+            // 
+            this.PrescriptionCountLabel.AutoSize = true;
+            this.PrescriptionCountLabel.BackColor = System.Drawing.Color.Transparent;
+            this.PrescriptionCountLabel.Font = new System.Drawing.Font("Niagara Solid", 20F, System.Drawing.FontStyle.Bold);
+            this.PrescriptionCountLabel.ForeColor = System.Drawing.Color.Crimson;
+            this.PrescriptionCountLabel.Location = new System.Drawing.Point(828, 173);
+            this.PrescriptionCountLabel.Name = "PrescriptionCountLabel";
+            this.PrescriptionCountLabel.Size = new System.Drawing.Size(0, 36);
+            this.PrescriptionCountLabel.TabIndex = 64;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Niagara Solid", 20F, System.Drawing.FontStyle.Bold);
+            this.label11.ForeColor = System.Drawing.Color.Crimson;
+            this.label11.Location = new System.Drawing.Point(67, 102);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(86, 36);
+            this.label11.TabIndex = 63;
+            this.label11.Text = "Patients";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Niagara Solid", 20F, System.Drawing.FontStyle.Bold);
+            this.label10.ForeColor = System.Drawing.Color.Crimson;
+            this.label10.Location = new System.Drawing.Point(387, 102);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(131, 36);
+            this.label10.TabIndex = 62;
+            this.label10.Text = "Appointments";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Niagara Solid", 20F, System.Drawing.FontStyle.Bold);
+            this.label9.ForeColor = System.Drawing.Color.Crimson;
+            this.label9.Location = new System.Drawing.Point(756, 102);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(218, 36);
+            this.label9.TabIndex = 61;
+            this.label9.Text = "Prescriptions Released";
+            // 
             // ReceptionistDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1036, 548);
+            this.Controls.Add(this.PatientCountLabel);
+            this.Controls.Add(this.AppointmentCountLabel);
+            this.Controls.Add(this.PrescriptionCountLabel);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.pictureBox7);
             this.Controls.Add(this.lblWelcome);
@@ -292,5 +388,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label PatientCountLabel;
+        private System.Windows.Forms.Label AppointmentCountLabel;
+        private System.Windows.Forms.Label PrescriptionCountLabel;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -13,21 +13,36 @@ using Project.Forms.Diagnostic_Forms;
 using Project.Forms.Billing_Forms;
 using Project.Forms.Pharmacy_Forms;
 using HospitalManagementSystem.Forms;
+using HospitalManagementSystem.Database;
 
 namespace Project.Forms.Employee_Forms
 {
     public partial class AdminDashboard : Form
     {
+        private YourDbContext dbContext;
+
         public AdminDashboard(string username)
         {
             InitializeComponent();
             SetUserName(username);
+            dbContext = new YourDbContext(); 
+            DisplayCounts();
 
+        }
+
+        private void DisplayCounts()
+        {
+            int patientCount = dbContext.Patients.Count();
+            int appointmentCount = dbContext.Appointments.Count();
+            int prescriptionCount = dbContext.Prescriptions.Count();
+
+            PatientCountLabel.Text = $"{patientCount}";
+            AppointmentCountLabel.Text = $"{appointmentCount}";
+            PrescriptionCountLabel.Text = $"{prescriptionCount}";
         }
 
         public void SetUserName(string username)
         {
-            // Display the username in the top right corner label
             lblWelcome.Text = $"Hello, {username}!";
         }
         private void pictureBox5_Click(object sender, EventArgs e)
@@ -77,6 +92,27 @@ namespace Project.Forms.Employee_Forms
         {
             ViewInvoiceForm iv = new ViewInvoiceForm();
             iv.Show();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void PatientCountLabel_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void AppointmentCountLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PrescriptionCountLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
