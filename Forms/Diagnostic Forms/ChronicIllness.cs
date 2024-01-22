@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,9 +10,10 @@ public class ChronicIllness
 
     public string ChronicIllnessName { get; set; }
 
+    // Foreign key referencing Diagnostic
     [ForeignKey("Diagnostic")]
-    public string PatientFile { get; set; }
+    public int DiagnosticId { get; set; }
 
-    
+    // Navigation property
     public Diagnostic Diagnostic { get; set; }
 }

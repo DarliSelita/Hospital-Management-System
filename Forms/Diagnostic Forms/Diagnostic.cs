@@ -1,16 +1,17 @@
-﻿using System;
+﻿// Diagnostic class
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 public class Diagnostic
 {
+    [Key]
+    public int Id { get; set; }
+
     // Patient Information
     public string PatientName { get; set; }
-
-    [Key]
     public string PatientFile { get; set; }
-
     public string Gender { get; set; }
     public string PhoneNumber { get; set; }
 
@@ -19,7 +20,7 @@ public class Diagnostic
 
     // Medical History
     public List<ChronicIllness> ChronicIllnesses { get; set; }
-    public string Allergies { get; set; }  // Change from List<string> to string
+    public string Allergies { get; set; }
     public string MedicationsAndVaccines { get; set; }
 
     // Lifestyle Information
@@ -28,27 +29,31 @@ public class Diagnostic
     public bool DrugUse { get; set; }
 
     // Vital Signs
-    [ForeignKey("PatientFile")]
+    [ForeignKey("PatientVitalSigns")]
+    public int DiagnosticId { get; set; }
+
+    // Navigation property
     public VitalSigns PatientVitalSigns { get; set; }
 
     // Buttons for Medical Tests
-    public List<MedicalTest> MedicalTests { get; set; }
+    public List<MedicalTest> MedicalTests { get; set; } = new List<MedicalTest>();
 
     // Constructor
     public Diagnostic()
     {
         ChronicIllnesses = new List<ChronicIllness>();
-        Allergies = string.Empty;  // Initialize as empty string
-        MedicationsAndVaccines = string.Empty;  // Initialize as empty string
-        PatientVitalSigns = new VitalSigns();
-        MedicalTests = new List<MedicalTest>();
+        Allergies = string.Empty;
+        MedicationsAndVaccines = string.Empty;
+        PatientVitalSigns = new VitalSigns(); 
     }
+
 }
+
 
 public class VitalSigns
 {
-    [Key, ForeignKey("Diagnostic")]
-    public string PatientFile { get; set; }
+    [Key]
+    public int VitalSignsId { get; set; }
 
     public int BloodPressure { get; set; }
     public int HeartRate { get; set; }
@@ -57,5 +62,10 @@ public class VitalSigns
     public float Height { get; set; }
     public float Weight { get; set; }
 
+    // Foreign key referencing Diagnostic
+    [ForeignKey("Diagnostic")]
+    public int DiagnosticId { get; set; }
+
+    // Navigation property
     public Diagnostic Diagnostic { get; set; }
 }

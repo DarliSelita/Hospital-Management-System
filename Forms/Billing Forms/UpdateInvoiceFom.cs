@@ -167,7 +167,9 @@ namespace Project.Forms.Billing_Forms
             {
                 MessageBox.Show($"An unexpected error occurred. Please contact support. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
+
+
     }
 }

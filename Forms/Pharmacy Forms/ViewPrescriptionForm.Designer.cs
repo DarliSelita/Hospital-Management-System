@@ -1,6 +1,6 @@
-﻿namespace Project.Forms.Appointment_Forms
+﻿namespace HospitalManagementSystem.Forms
 {
-    partial class ViewAppointmentForm
+    partial class ViewPrescriptionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -26,20 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // ViewAppointmentForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "ViewAppointmentForm";
-            this.Text = "ViewAppointmentForm";
-            this.ResumeLayout(false);
 
-        }
 
         #endregion
     }

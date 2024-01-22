@@ -45,14 +45,12 @@ namespace HospitalManagementSystem.Forms.PatientForms
                 Location = new System.Drawing.Point(300, 100),
                 Size = new System.Drawing.Size(100, 40),
 
+                BackColor = System.Drawing.Color.Blue,
                 ForeColor = System.Drawing.Color.White,
-            
+                Font = new System.Drawing.Font("Open Sans", 12, System.Drawing.FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
-                FlatAppearance = { BorderSize = 0 },
-                BackColor = Color.LightBlue,
-                Padding = new Padding(6),
-                Font = new Font("French Script MT", 18)
-        };
+                FlatAppearance = { BorderSize = 0 }
+            };
             btnCancel.Click += btnCancel_Click;
 
             Controls.Add(lblConfirmation);

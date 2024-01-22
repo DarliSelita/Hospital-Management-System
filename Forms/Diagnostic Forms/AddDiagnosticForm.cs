@@ -16,14 +16,21 @@ namespace Project.Forms.Diagnostic_Forms
     public partial class AddDiagnosticForm : Form
     {
         private Diagnostic patientRecord;
+        private YourDbContext dbContext;  
+
 
         public AddDiagnosticForm()
         {
             InitializeComponent();
             AutoScaleMode = AutoScaleMode.Dpi; 
             this.ClientSize = new System.Drawing.Size(1050, 500);
-
+            dbContext = new YourDbContext();
             patientRecord = new Diagnostic();
+
+            patientRecord = new Diagnostic
+            {
+                PatientVitalSigns = new VitalSigns()
+            };
 
         }
         private void InitializeComponent()
@@ -238,47 +245,6 @@ namespace Project.Forms.Diagnostic_Forms
             return button;
         }
 
-        private void AddMedicalTest(string testType)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
-            openFileDialog.Title = $"Add {testType} Test";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Get the file path
-                    string filePath = openFileDialog.FileName;
-
-                    // Create a MedicalTest entity
-                    MedicalTest medicalTest = new MedicalTest
-                    {
-                        TestName = testType,
-                        TestDate = DateTime.Now,
-                        FilePath = filePath,
-                        PatientRecordId = patientRecord.PatientFile
-                    };
-
-                    // Save the MedicalTest entity to the database
-                    using (var dbContext = new YourDbContext())
-                    {
-                        dbContext.MedicalTests.Add(medicalTest);
-                        dbContext.SaveChanges();
-                    }
-
-                    MessageBox.Show($"Medical test '{testType}' added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Update the button appearance after adding the PDF file
-                    UpdateButtonAppearance(testType);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred while adding the medical test. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void UpdateButtonAppearance(string testType)
         {
             // Find the corresponding button based on the testType
@@ -295,52 +261,115 @@ namespace Project.Forms.Diagnostic_Forms
         }
 
 
-        private void btnSaveToDatabase_Click(object sender, EventArgs e)
+        private void AddMedicalTest(string testType)
         {
-            using (var dbContext = new YourDbContext())
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                try
-                {
-                    // Check if a record with the same PatientFile already exists
-                    if (!dbContext.PatientRecords.Any(p => p.PatientFile == patientRecord.PatientFile))
-                    {
-                        // Add the patientRecord to the context
-                        dbContext.PatientRecords.Add(patientRecord);
+                openFileDialog.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                openFileDialog.Title = $"Add {testType} Test";
 
-                        // Check for duplicate PatientRecordId in MedicalTests
-                        if (patientRecord.MedicalTests.GroupBy(mt => mt.PatientRecordId).Any(g => g.Count() > 1))
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        // Get the file path
+                        string filePath = openFileDialog.FileName;
+
+                        // Ensure that patientRecord is not null
+                        if (patientRecord == null)
                         {
-                            MessageBox.Show("Duplicate PatientRecordId found in MedicalTests. Each MedicalTest should have a unique PatientRecordId.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Error: The patient record is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
 
-                        // Check for existing PatientRecordId in MedicalTests
-                        foreach (var medicalTest in patientRecord.MedicalTests)
+                        // Check the state of the entity entry
+                        var diagnosticEntry = dbContext.Entry(patientRecord);
+
+                        if (diagnosticEntry.State == EntityState.Detached)
                         {
-                            if (!dbContext.MedicalTests.Any(mt => mt.PatientRecordId == medicalTest.PatientRecordId))
-                            {
-                                dbContext.MedicalTests.Add(medicalTest);
-                            }
-                            else
-                            {
-                                MessageBox.Show($"MedicalTest with PatientRecordId {medicalTest.PatientRecordId} already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                            // If the entity is detached, attach it to the context
+                            dbContext.Attach(patientRecord);
                         }
 
-                        // Save changes to the database
-                        dbContext.SaveChanges();
-                        MessageBox.Show("Patient record and associated medical tests saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Create a MedicalTest entity
+                        MedicalTest medicalTest = new MedicalTest
+                        {
+                            TestName = testType,
+                            TestDate = DateTime.Now,
+                            FilePath = filePath,
+                            DiagnosticId = patientRecord.Id, // Assuming Id is the primary key in Diagnostic
+                            Diagnostic = patientRecord // Setting the navigation property
+                        };
+
+                        // Attach the MedicalTest entity to the context
+                        dbContext.MedicalTest.Add(medicalTest);
+
+                        // Update the button appearance after adding the PDF file
+                        UpdateButtonAppearance(testType);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Patient file number must be unique.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"An error occurred while adding the medical test. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An unexpected error occurred. Please contact support. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
+
+
+
+        private void btnSaveToDatabase_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Check if a record with the same PatientFile already exists
+                if (!dbContext.PatientRecords.Any(p => p.PatientFile == patientRecord.PatientFile))
+                {
+                    // Add the patientRecord to the context
+                    dbContext.PatientRecords.Add(patientRecord);
+
+                    // Check for duplicate PatientRecordId in MedicalTests
+                    if (patientRecord.MedicalTests.GroupBy(mt => mt.DiagnosticId).Any(g => g.Count() > 1))
+                    {
+                        MessageBox.Show("Duplicate PatientRecordId found in MedicalTests. Each MedicalTest should have a unique PatientRecordId.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Check for existing PatientRecordId in MedicalTests
+                    foreach (var medicalTest in patientRecord.MedicalTests)
+                    {
+                        if (!dbContext.MedicalTest.Any(mt => mt.DiagnosticId == medicalTest.DiagnosticId)) // Corrected from dbContext.MedicalTest
+                        {
+                            dbContext.MedicalTest.Add(medicalTest); // Corrected from dbContext.MedicalTest
+                        }
+                        else
+                        {
+                            MessageBox.Show($"MedicalTest with PatientRecordId {medicalTest.DiagnosticId} already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    // Save changes to the database
+                    dbContext.SaveChanges();
+                    MessageBox.Show("Patient record and associated medical tests saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Patient file number must be unique.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                // Display the specific database update exception
+                MessageBox.Show($"Database update error. Details: {dbEx.InnerException?.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                // Display a general exception
+                MessageBox.Show($"An unexpected error occurred. Please contact support. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HospitalManagementSystem.Database;
 
@@ -7,7 +8,7 @@ namespace Project.Forms.Diagnostic_Forms
 {
     public partial class DeleteDiagnosticForm : Form
     {
-        private readonly Diagnostic diagnosticRecordToDelete; // Marking it as readonly
+        private readonly Diagnostic diagnosticRecordToDelete;
 
         public DeleteDiagnosticForm(Diagnostic diagnosticRecord)
         {
@@ -18,7 +19,6 @@ namespace Project.Forms.Diagnostic_Forms
 
         private void InitializeUIComponents()
         {
-            // Initialize labels and buttons as needed
             var lblConfirmation = new Label
             {
                 Text = $"Are you sure you want to delete the diagnostic record for {diagnosticRecordToDelete.PatientName}?",
@@ -60,25 +60,53 @@ namespace Project.Forms.Diagnostic_Forms
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            // Perform the deletion logic here
-            using (var dbContext = new YourDbContext()) // Replace with your actual DbContext
+            using (var dbContext = new YourDbContext())
             {
                 try
                 {
+                    // Attach the diagnostic record to the context
+                    dbContext.Attach(diagnosticRecordToDelete);
+
+                    // Manually delete associated MedicalTest records
+                    var medicalTestsToDelete = dbContext.MedicalTest
+                        .Where(mt => mt.DiagnosticId == diagnosticRecordToDelete.Id)
+                        .ToList();
+
+                    dbContext.MedicalTest.RemoveRange(medicalTestsToDelete);
+
+                    // Manually delete associated ChronicIllness records
+                    var chronicIllnessesToDelete = dbContext.ChronicIllnesses
+                        .Where(ci => ci.DiagnosticId == diagnosticRecordToDelete.Id)
+                        .ToList();
+
+                    dbContext.ChronicIllnesses.RemoveRange(chronicIllnessesToDelete);
+
+                    // Manually delete associated VitalSigns record
+                    var vitalSignsToDelete = dbContext.VitalSigns
+                        .Where(vs => vs.DiagnosticId == diagnosticRecordToDelete.Id)
+                        .ToList();
+
+                    dbContext.VitalSigns.RemoveRange(vitalSignsToDelete);
+
+                    // Remove the diagnostic record
                     dbContext.PatientRecords.Remove(diagnosticRecordToDelete);
+
+                    // Save changes to the database
                     dbContext.SaveChanges();
 
                     MessageBox.Show("Diagnostic record deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting diagnostic record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error deleting diagnostic record: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             // Close the form after deleting the diagnostic record
             this.Close();
         }
+
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {

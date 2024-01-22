@@ -1,5 +1,4 @@
 ﻿using HospitalManagementSystem.Database;
-using HospitalManagementSystem.Forms.PatientForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
+using HospitalManagementSystem.Forms.PatientForms;
 
 namespace Project.Forms.Patient_Forms
 {
@@ -16,47 +16,98 @@ namespace Project.Forms.Patient_Forms
         private Button btnAddPatient;
         private Button btnUpdatePatient;
         private Button btnDeletePatient;
+        private Label lblSearch;
+        private TextBox txtSearch;
 
         public ViewPatientForm()
         {
             InitializeComponent();
             InitializeUIComponents();
             LoadPatientData();
+            WindowState = FormWindowState.Maximized; // Set to maximize the form
         }
 
         private void InitializeUIComponents()
         {
+            BackColor = Color.FromArgb(28, 41, 34); // Adjusted form background color
+
+
             dataGridView = new DataGridView();
             dataGridView.Name = "dataGridView";
             dataGridView.Location = new Point(50, 50);
-            dataGridView.Size = new Size(500, 200);
+            dataGridView.Size = new Size(ClientSize.Width - 100, ClientSize.Height - 200);
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView.RowTemplate.Height = 35;
+            dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            dataGridView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.ColumnHeadersHeight = 50;
+            dataGridView.DefaultCellStyle.Font = new Font("Segoe UI", 11);
+            dataGridView.ReadOnly = true;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToResizeColumns = false;
+            dataGridView.AllowUserToResizeRows = false;
+            dataGridView.GridColor = Color.FromArgb(28, 41, 34);
+            dataGridView.BorderStyle = BorderStyle.None;
+            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(36, 156, 116);
+            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(28, 41, 34);
+            dataGridView.DefaultCellStyle.ForeColor = Color.White;
             dataGridView.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
             dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dataGridView.RowsDefaultCellStyle.BackColor = Color.FromArgb(36, 156, 154);
+            dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(36, 156, 116);
+            dataGridView.BackgroundColor = Color.FromArgb(28, 41, 34);
+            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 
-            btnAddPatient = CreateIconButton("btnAddPatient", IconChar.Plus, Color.Black, Color.Green);
-            btnAddPatient.Location = new Point(50, 280);
+            btnAddPatient = CreateIconButton("btnAddPatient", FontAwesome.Sharp.IconChar.Plus, Color.Black, Color.Green);
+            btnAddPatient.Location = new Point(50, dataGridView.Bottom + 20);
             btnAddPatient.Click += btnAddPatient_Click;
 
-            btnUpdatePatient = CreateIconButton("btnUpdatePatient", IconChar.Edit, Color.Black, Color.Yellow);
-            btnUpdatePatient.Location = new Point(180, 280);
+            btnUpdatePatient = CreateIconButton("btnUpdatePatient", FontAwesome.Sharp.IconChar.Edit, Color.Black, Color.Yellow);
+            btnUpdatePatient.Location = new Point(btnAddPatient.Right + 10, dataGridView.Bottom + 20);
             btnUpdatePatient.Click += btnUpdatePatient_Click;
 
-            btnDeletePatient = CreateIconButton("btnDeletePatient", IconChar.TrashAlt, Color.Black, Color.Red);
-            btnDeletePatient.Location = new Point(310, 280);
+            btnDeletePatient = CreateIconButton("btnDeletePatient", FontAwesome.Sharp.IconChar.TrashAlt, Color.Black, Color.Red);
+            btnDeletePatient.Location = new Point(btnUpdatePatient.Right + 10, dataGridView.Bottom + 20);
             btnDeletePatient.Click += btnDeletePatient_Click;
 
-            SetAnchorStyles(dataGridView, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
-            SetAnchorStyles(btnAddPatient, AnchorStyles.Top | AnchorStyles.Left);
-            SetAnchorStyles(btnUpdatePatient, AnchorStyles.Top | AnchorStyles.Left);
-            SetAnchorStyles(btnDeletePatient, AnchorStyles.Top | AnchorStyles.Right);
+            lblSearch = new Label();
+            lblSearch.Text = "Search: ";
+            lblSearch.Font = new Font("Segoe UI", 14);
+            lblSearch.Location = new Point(btnDeletePatient.Right + 170, 910);
+            lblSearch.ForeColor = Color.FromArgb(5, 250, 99);
+            lblSearch.AutoSize = true; // Set AutoSize to true
+
+            txtSearch = CreateTextBox();
+            txtSearch.Location = new Point(btnDeletePatient.Right + 280, 915);
+            txtSearch.Font = new Font("Segoe UI", 18);
+            txtSearch.TextChanged += TxtSearch_TextChanged;
+
+            SetAnchorStyles(dataGridView, AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
+            SetAnchorStyles(btnAddPatient, AnchorStyles.Bottom | AnchorStyles.Left);
+            SetAnchorStyles(btnUpdatePatient, AnchorStyles.Bottom | AnchorStyles.Left);
+            SetAnchorStyles(btnDeletePatient, AnchorStyles.Bottom | AnchorStyles.Left);
+            SetAnchorStyles(lblSearch, AnchorStyles.Top | AnchorStyles.Left);
+            SetAnchorStyles(txtSearch, AnchorStyles.Top | AnchorStyles.Left);
 
             Controls.Add(dataGridView);
             Controls.Add(btnAddPatient);
             Controls.Add(btnUpdatePatient);
             Controls.Add(btnDeletePatient);
+            Controls.Add(lblSearch);
+            Controls.Add(txtSearch);
         }
 
-        private Button CreateIconButton(string name, IconChar icon, Color foreColor, Color backColor)
+        private TextBox CreateTextBox()
+        {
+            TextBox textBox = new TextBox();
+            textBox.Size = new Size(200, 30);
+            return textBox;
+        }
+
+        private Button CreateIconButton(string name, FontAwesome.Sharp.IconChar icon, Color foreColor, Color backColor)
         {
             Button button = new Button();
             button.Name = name;
@@ -69,12 +120,20 @@ namespace Project.Forms.Patient_Forms
             return button;
         }
 
-        private void LoadPatientData()
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+            LiveSearch();
+        }
+
+        private void LiveSearch()
         {
             using (var dbContext = new YourDbContext())
             {
-                List<Patient> patients = dbContext.Patients.ToList();
-                DataTable dataTable = ConvertToDataTable(patients);
+                var searchResult = dbContext.Patients
+                    .Where(p => p.Name.Contains(txtSearch.Text) || p.Surname.Contains(txtSearch.Text))
+                    .ToList();
+
+                DataTable dataTable = ConvertToDataTable(searchResult);
                 dataGridView.DataSource = dataTable;
             }
         }
@@ -153,6 +212,16 @@ namespace Project.Forms.Patient_Forms
             return dataTable;
         }
 
+        private void LoadPatientData()
+        {
+            using (var dbContext = new YourDbContext())
+            {
+                List<Patient> patients = dbContext.Patients.ToList();
+                DataTable dataTable = ConvertToDataTable(patients);
+                dataGridView.DataSource = dataTable;
+            }
+        }
+
         private void SetAnchorStyles(Control control, AnchorStyles anchorStyles)
         {
             control.Anchor = anchorStyles;
@@ -161,6 +230,11 @@ namespace Project.Forms.Patient_Forms
         private void ViewPatientForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

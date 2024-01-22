@@ -190,21 +190,3 @@ namespace HospitalManagementSystem.Forms.PatientForms
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
